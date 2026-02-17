@@ -1,0 +1,26 @@
+{
+  "name": "color-mixer",
+  "version": "0.0.2",
+  "description": "## 📌 Simple RGB color mixer web app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:unit": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NazarHavryliuk/color-mixer.git"
+  },
+  "keywords": [],
+  "author": "Nazar Havryliuk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NazarHavryliuk/color-mixer/issues"
+  },
+  "homepage": "https://github.com/NazarHavryliuk/color-mixer#readme",
+  "devDependencies": {
+    "vitest": "^4.0.18"
+  }
+}
