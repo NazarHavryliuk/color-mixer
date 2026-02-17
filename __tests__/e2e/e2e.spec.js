@@ -18,12 +18,10 @@ test('Critical path: slider color mixing works', async ({ page }) => {
     blue.dispatchEvent(new Event('input'));
   });
 
-  await page.waitForTimeout(5000); // пауза 1 секунда, щоб побачити зміни
 
   // Натискаємо кнопку
   await page.click('#applyColor');
 
-  await page.waitForTimeout(5000); // ще пауза після натискання
 
   // Перевіряємо результат
   const hexText = await page.textContent('#sensorHex');
