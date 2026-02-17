@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Color Mixer</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
@@ -19,7 +19,18 @@
 <input type="range" id="blue" min="0" max="255"><br><br>
 
 <div id="colorBox"></div>
-<script src="js/script.js"></script>
+<p>HEX Color: <span id="hexColor">#000000</span></p>
+
+<br>
+<button id="applyColor">Read Sensors</button>
+
+<div id="sensorBox"></div>
+<p>Sensor HEX Color: <span id="sensorHex">#000000</span></p>
+
+<script type="module">
+  import { init } from './js/script.js';
+  init();
+</script>
+
 </body>
 </html>
-
