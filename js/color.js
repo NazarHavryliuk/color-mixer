@@ -8,3 +8,4 @@ export function mixColors(r, g, b) {
   return `rgb(${r}, ${g}, ${b})`;
 }
 
+

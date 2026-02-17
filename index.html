@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +21,15 @@
 <div id="colorBox"></div>
 <p>HEX Color: <span id="hexColor">#000000</span></p>
 
+<br>
+<button id="applyColor">Read Sensors</button>
 
-<script type="module" src="js/script.js"></script>
+<div id="sensorBox"></div>
+<p>Sensor HEX Color: <span id="sensorHex">#000000</span></p>
+
+<script type="module">
+  import { init } from './js/script.js';
+  init();
+</script>
 </body>
 </html>
