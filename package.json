@@ -7,6 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "lint": "eslint . --ext .js,.vue --fix",
+    "format": "prettier --write \"src/**/*.{js,vue,json,css}\"",
     "test:unit": "vitest",
     "test:unit:ui": "vitest --ui",
     "test:unit:coverage": "vitest --coverage",
@@ -26,11 +28,19 @@
   },
   "homepage": "https://github.com/NazarHavryliuk/color-mixer#readme",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.58.2",
     "@vitejs/plugin-vue": "5.0.4",
     "@vitest/coverage-v8": "^4.0.18",
     "@vitest/ui": "4.0.18",
     "@vue/test-utils": "2.4.6",
-    "vitest": "^4.0.18"
+    "eslint": "^10.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-vue": "^10.8.0",
+    "globals": "^17.3.0",
+    "prettier": "^3.8.1",
+    "vitest": "^4.0.18",
+    "vue-eslint-parser": "^10.4.0"
   }
 }

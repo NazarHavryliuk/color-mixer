@@ -2,12 +2,10 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { updateColor } from '../../js/script.js';
 
 describe('Critical path: successful color mix', () => {
-  let red, green, blue, colorBox, hexOutput;
+  let colorBox, hexOutput;
 
   beforeEach(() => {
-    red = { value: '255' };
-    green = { value: '0' };
-    blue = { value: '0' };
+
     colorBox = { style: { backgroundColor: '' } };
     hexOutput = { textContent: '' };
   });
