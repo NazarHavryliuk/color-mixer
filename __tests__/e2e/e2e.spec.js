@@ -22,7 +22,7 @@ This project demonstrates:
 ## 🌐 Live Deployment
 
 You can try the app online here:  
-[https://color-mixer123321.vercel.app](https://color-mixer123321.vercel.app)
+[https://color-mixer123321.vercel.app](https://color-mixer.vercel.app)
 
 ---
 
