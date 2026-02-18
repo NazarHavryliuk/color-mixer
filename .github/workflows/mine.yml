@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Deploy to Vercel
-        run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }} 
+        run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
 
       - name: Run linter
         run: npm run lint
