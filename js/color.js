@@ -5,7 +5,7 @@ export function rgbToHex(r, g, b) {
 }
 
 export function mixColors(r, g, b) {
-  return `rgb(${r}, ${g}, ${5})`;
+  return `rgb(${r}, ${g}, ${b})`;
 }
 
 
