@@ -72,31 +72,57 @@ GitHub Actions (CI)
 Vercel (deployment)
 
 📂 Project Structure
+
 color-mixer/
+
 │
+
 ├─ node_modules/          # встановлені пакети (не комітяться)
+
 ├─ dist/                  # збірка для продакшену
+
 ├─ public/                # статичні файли (favicon, картинки)
+
 │
+
 ├─ __tests__/             # тести
+
 │  ├─ unit/               # юніт-тести (Vitest)
+
 │  │   ├─ color.test.js
+
 │  │   └─ script.test.js
+
 │  └─ e2e/                # інтеграційні / e2e тести (Playwright)
+
 │      └─ e2e.spec.js
+
 │
+
 ├─ src/                   # основний код проекту
+
 │  ├─ css/
+
 │  │   └─ style.css
+
 │  ├─ js/
+
 │  │   ├─ color.js
+
 │  │   └─ script.js
+
 │  └─ index.html          # головна HTML-сторінка
+
 │
+
 ├─ package.json            # залежності, скрипти, конфігурації
+
 ├─ vite.config.js          # конфіг для Vite
+
 ├─ vitest.config.js        # конфіг для Vitest
+
 ├─ playwright.config.js    # конфіг для Playwright
+
 └─ .gitignore
 ⚙️ CI/CD
 GitHub Actions: автоматичне тестування на кожен push або pull request (main, develop, feature/*)
