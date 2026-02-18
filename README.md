@@ -1,7 +1,7 @@
 # Color Mixer 🎨
 
 [![Run Tests](https://github.com/NazarHavryliuk/color-mixer/actions/workflows/mine.yml/badge.svg?branch=main)](https://github.com/NazarHavryliuk/color-mixer/actions/workflows/mine.yml)  
-[![Vercel Deployment](https://vercel.com/button)](color-mixer-edeiqgw7e-nazars-projects-c6ebf03f.vercel.app)
+[![Vercel Deployment](https://vercel.com/button)](https://color-mixer-edeiqgw7e-nazars-projects-c6ebf03f.vercel.app/)
 
 ## 📌 Project Description (MVP)
 
@@ -22,7 +22,7 @@ This project demonstrates:
 ## 🌐 Live Deployment
 
 You can try the app online here:  
-[https://color-mixer.vercel.app](color-mixer-edeiqgw7e-nazars-projects-c6ebf03f.vercel.app)
+[https://color-mixer.vercel.app](https://color-mixer-edeiqgw7e-nazars-projects-c6ebf03f.vercel.app/)
 
 ---
 
