@@ -1,52 +1,111 @@
 # Color Mixer 🎨
 
-[![Run Tests](https://github.com/NazarHavryliuk/color-mixer/actions/workflows/mine.yml/badge.svg?branch=main)](https://github.com/NazarHavryliuk/color-mixer/actions/workflows/mine.yml)
+[![Run Tests](https://github.com/NazarHavryliuk/color-mixer/actions/workflows/mine.yml/badge.svg?branch=main)](https://github.com/NazarHavryliuk/color-mixer/actions/workflows/mine.yml)  
+[![Vercel Deployment](https://vercel.com/button)](https://color-mixer123321.vercel.app)
 
 ## 📌 Project Description (MVP)
 
-Color Mixer is a simple web application that allows users to mix RGB colors
-using three sliders (Red, Green, Blue).  
-The selected color is displayed in real time inside a preview box.
+Color Mixer is a web application that allows users to mix RGB colors
+using three sliders (Red, Green, Blue). The resulting color is displayed
+in real time in a preview box. You can also read the "sensor" color
+by clicking the **Read Sensors** button, which updates a separate display.
 
-This project demonstrates basic usage of:
-- HTML structure
-- CSS styling
-- JavaScript DOM manipulation
+This project demonstrates:
+
+- HTML, CSS, JavaScript (Vanilla JS)
+- DOM manipulation and event handling
+- CI with GitHub Actions (unit and e2e tests)
+- Deployment to Vercel
 
 ---
 
-## 🚀 How to Run the Project
+## 🌐 Live Deployment
+
+You can try the app online here:  
+[https://color-mixer123321.vercel.app](https://color-mixer.vercel.app)
+
+---
+
+## 🚀 How to Run Locally
 
 1. Clone the repository:
 
+   ```bash
    git clone https://github.com/NazarHavryliuk/color-mixer.git
+Enter the project directory:
 
-2. Open the project folder:
+cd color-mixer
+Install dependencies:
 
-   cd color-mixer
+npm ci
+Start local server (for e2e tests or preview):
 
-3. Open `index.html` in your browser.
+npx serve ./ -l 3000
+Open src/index.html in your browser (or visit http://localhost:3000).
 
-No installation or server is required.
-The project works locally in any modern browser.
+🧪 Testing
+Unit Tests (Vitest):
 
----
+npm run test:unit
+npm run test:unit:ui
+npm run test:unit:coverage
+End-to-End Tests (Playwright):
 
-## 🛠 Technologies Used
+npm run test:e2e
+npm run test:e2e:ui
+Run all tests:
 
-- HTML5
-- CSS3
-- JavaScript (Vanilla JS)
+npm run test
+🛠 Technologies Used
+HTML5, CSS3, JavaScript (Vanilla)
 
----
+Node.js & npm
 
-## 📂 Project Structure
+Vite (build tool)
 
+Vitest (unit testing)
+
+Playwright (end-to-end testing)
+
+GitHub Actions (CI)
+
+Vercel (deployment)
+
+📂 Project Structure
 color-mixer/
 │
-├── index.html
-├── README.md
-├── css/
-│   └── style.css
-└── js/
-    └── script.js
+├─ node_modules/          # встановлені пакети (не комітяться)
+├─ dist/                  # збірка для продакшену
+├─ public/                # статичні файли (favicon, картинки)
+│
+├─ __tests__/             # тести
+│  ├─ unit/               # юніт-тести (Vitest)
+│  │   ├─ color.test.js
+│  │   └─ script.test.js
+│  └─ e2e/                # інтеграційні / e2e тести (Playwright)
+│      └─ e2e.spec.js
+│
+├─ src/                   # основний код проекту
+│  ├─ css/
+│  │   └─ style.css
+│  ├─ js/
+│  │   ├─ color.js
+│  │   └─ script.js
+│  └─ index.html          # головна HTML-сторінка
+│
+├─ package.json            # залежності, скрипти, конфігурації
+├─ vite.config.js          # конфіг для Vite
+├─ vitest.config.js        # конфіг для Vitest
+├─ playwright.config.js    # конфіг для Playwright
+└─ .gitignore
+⚙️ CI/CD
+GitHub Actions: автоматичне тестування на кожен push або pull request (main, develop, feature/*)
+
+Vercel: автоматичний деплой на production після merge в main
+
+Для деплоя використовується секретний токен Vercel (VERCEL_TOKEN) через GitHub Secrets.
+Всі логи тестів приховують конфіденційні дані.
+
+💡 Author
+Nazar Havryliuk
+GitHub Repository
