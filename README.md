@@ -1,5 +1,7 @@
 # Color Mixer 🎨
 
+[![Run Tests](https://github.com/NazarHavryliuk/color-mixer/actions/workflows/mine.yml/badge.svg?branch=main)](https://github.com/NazarHavryliuk/color-mixer/actions/workflows/mine.yml)
+
 ## 📌 Project Description (MVP)
 
 Color Mixer is a simple web application that allows users to mix RGB colors
@@ -48,4 +50,3 @@ color-mixer/
 │   └── style.css
 └── js/
     └── script.js
-
