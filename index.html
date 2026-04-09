@@ -9,6 +9,23 @@
 <footer>
   <p id="app-status"></p>
 </footer>
+<div id="auth-section">
+  <div id="login-form">
+    <h3>Login</h3>
+    <input type="text" id="login-id" placeholder="User ID" value="12345">
+    <input type="email" id="login-email" placeholder="Email" value="student@example.com">
+    <select id="login-segment">
+      <option value="premium_user">Premium User</option>
+      <option value="free_user">Free User</option>
+    </select>
+    <button id="login-btn">Login</button>
+  </div>
+  <div id="user-info" style="display:none">
+    <span id="user-label"></span>
+    <button id="logout-btn">Logout</button>
+  </div>
+</div>
+
 <h2>Simple Color Mixer</h2>
 
 <label>Red:</label>
@@ -27,6 +44,7 @@
 <button id="applyColor">Read Sensors</button>
 <button id="resetColor">Reset</button>
 <button id="urgent-btn" style="display:none">Only Bright Colors</button>
+<button id="break-btn">Break the world</button>
 
 <div id="sensorBox"></div>
 <p>Sensor HEX Color: <span id="sensorHex">#000000</span></p>
