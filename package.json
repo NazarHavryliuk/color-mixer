@@ -28,7 +28,6 @@
   },
   "homepage": "https://github.com/NazarHavryliuk/color-mixer#readme",
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.58.2",
     "@sentry/vite-plugin": "^5.2.0",
     "@vitejs/plugin-vue": "^5.0.4",
