@@ -16,7 +16,7 @@ Sentry.init({
 });
 
 posthog.init("phc_CEaawL384zYxVKk39r8Cqe8RWaRqWRWRKnF6ajyLS5F3", {  
-  api_host: '/ingest',  
+  api_host: "https://app.posthog.com",  
   ui_host: import.meta.env.VITE_POSTHOG_HOST,  
   person_profiles: 'always',  
   disable_session_recording: false, // явно вмикаємо (або просто не вказуй — буде увімкнено)  
