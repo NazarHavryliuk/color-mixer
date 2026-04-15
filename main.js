@@ -17,7 +17,7 @@ Sentry.init({
 
 posthog.init("phc_CEaawL384zYxVKk39r8Cqe8RWaRqWRWRKnF6ajyLS5F3", {  
   api_host: "https://app.posthog.com",  
-  ui_host: import.meta.env.VITE_POSTHOG_HOST,  
+  ui_host: "https://eu.i.posthog.com",  
   person_profiles: 'always',  
   disable_session_recording: false, // явно вмикаємо (або просто не вказуй — буде увімкнено)  
   session_recording: {  
