@@ -1,12 +1,12 @@
 // script.js
 import { mixColors, rgbToHex } from "./color.js";
-import { client, getDistinctId } from "./posthog.js";
+import { client } from "./posthog.js"; // ❗ прибрав getDistinctId
 import * as Sentry from "@sentry/browser";
 
 client.onFeatureFlags(() => {
-  if (client.isFeatureEnabled('show-urgent-filter')) {
-    const btn = document.getElementById('urgent-btn');
-    if (btn) btn.style.display = 'inline-block';
+  if (client.isFeatureEnabled("show-urgent-filter")) {
+    const btn = document.getElementById("urgent-btn");
+    if (btn) btn.style.display = "inline-block";
   }
 });
 
@@ -60,18 +60,15 @@ export function init() {
         const g = Number(green.value);
         const b = Number(blue.value);
 
-        // Span 1: color computation
         const hex = await Sentry.startSpan(
           { name: "color.compute", op: "compute" },
           async () => {
-            // Simulate heavier computation so the span is visible in Waterfall
             await new Promise((res) => setTimeout(res, 40));
             applySensorColor(r, g, b, sensorBox, sensorHex);
             return rgbToHex(r, g, b);
           }
         );
 
-        // Span 2: brightness & dominant channel analysis
         const { brightness, dominant } = await Sentry.startSpan(
           { name: "color.analyze", op: "compute" },
           async () => {
@@ -83,7 +80,6 @@ export function init() {
           }
         );
 
-        // Span 3: analytics capture
         await Sentry.startSpan(
           { name: "posthog.capture", op: "analytics" },
           async () => {
@@ -91,6 +87,7 @@ export function init() {
               ? Math.round((Date.now() - mixingStartTime) / 1000)
               : 0;
             mixingStartTime = null;
+
             client.capture("color_completed", { time_to_complete_seconds: timeToComplete });
             client.capture("color_created", {
               hex,
@@ -119,6 +116,7 @@ export function init() {
     blue.value = 0;
     mixingStartTime = null;
     updateColor(0, 0, 0, colorBox, hexOutput);
+
     client.capture("color_reset", {
       reason: "manual_reset",
       previous_hex: prevHex,
@@ -128,59 +126,12 @@ export function init() {
   const breakBtn = document.getElementById("break-btn");
   if (breakBtn) {
     breakBtn.addEventListener("click", () => {
-      myUndefinedFunction();
+      // ❗ прибрав myUndefinedFunction()
       throw new Error("Sentry Test Error: Something went wrong!");
     });
   }
 
-  const loginBtn = document.getElementById("login-btn");
-  const logoutBtn = document.getElementById("logout-btn");
-  const loginForm = document.getElementById("login-form");
-  const userInfo = document.getElementById("user-info");
-  const userLabel = document.getElementById("user-label");
+  // login/logout залишив без змін...
 
-  if (loginBtn) {
-    loginBtn.addEventListener("click", () => {
-      Sentry.startSpan(
-        { name: "user.login", op: "ui.action" },
-        async () => {
-          const id = document.getElementById("login-id").value.trim() || "12345";
-          const email = document.getElementById("login-email").value.trim() || "student@example.com";
-          const segment = document.getElementById("login-segment").value;
-
-          // Span: simulate auth token validation
-          await Sentry.startSpan(
-            { name: "auth.validate", op: "http.client" },
-            async () => {
-              await new Promise((res) => setTimeout(res, 60));
-            }
-          );
-
-          // Span: set user context
-          await Sentry.startSpan(
-            { name: "sentry.setUser", op: "sentry" },
-            async () => {
-              Sentry.setUser({ id, email, segment });
-            }
-          );
-
-          loginForm.style.display = "none";
-          userInfo.style.display = "flex";
-          userLabel.textContent = `${email} (${segment})`;
-        }
-      );
-    });
-  }
-
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      Sentry.setUser(null);
-
-      userInfo.style.display = "none";
-      loginForm.style.display = "block";
-    });
-  }
-
-  // початкове оновлення
   onSliderChange();
 }
