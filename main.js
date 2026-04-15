@@ -15,7 +15,7 @@ Sentry.init({
 });
 
 posthog.init("phc_XXX", {
-  api_host: "https://eu.i.posthog.com",
+  api_host: "https://eu.posthog.com",
   ui_host: "https://eu.posthog.com",
   person_profiles: 'always',
   session_recording: {
