@@ -12,11 +12,10 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
   environment: import.meta.env.MODE,
   sendDefaultPii: true,
-  tunnel: '/sentry-tunnel',
 });
 
 posthog.init("phc_XXX", {
-  api_host: "https://app.posthog.com",
+  api_host: "https://eu.i.posthog.com",
   ui_host: "https://eu.posthog.com",
   person_profiles: 'always',
   session_recording: {
