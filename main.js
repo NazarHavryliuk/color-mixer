@@ -14,21 +14,12 @@ Sentry.init({
   sendDefaultPii: true,
 });
 
-posthog.init("phc_XXX", {
-  api_host: "https://eu.posthog.com",
+posthog.init("phc_CEaawL384zYxVKk39r8Cqe8RWaRqWRWRKnF6ajyLS5F3", {
+  api_host: "https://eu.i.posthog.com",
   ui_host: "https://eu.posthog.com",
-  person_profiles: 'always',
-  session_recording: {
-    maskAllInputs: false,
-  },
-  loaded: () => {
-    posthog.reloadFeatureFlags();
 
-    if (posthog.isFeatureEnabled("show-urgent-filter")) {
-      const btn = document.getElementById("urgent-btn");
-      if (btn) btn.style.display = "inline-block";
-    }
-  }
+  capture_pageview: true,
+  persistence: "localStorage",
 });
 
 posthog.identify(posthog.get_distinct_id());
