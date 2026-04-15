@@ -1,14 +1,57 @@
 // script.js
 import { mixColors, rgbToHex } from "./color.js";
-import { client, getDistinctId } from "./posthog.js";
+import { client } from "./posthog.js";
 import * as Sentry from "@sentry/browser";
 
-client.onFeatureFlags(() => {
-  if (client.isFeatureEnabled('show-urgent-filter')) {
-    const btn = document.getElementById('urgent-btn');
-    if (btn) btn.style.display = 'inline-block';
+client?.onFeatureFlags?.(() => {
+  if (client?.isFeatureEnabled?.("show-urgent-filter")) {
+    const btn = document.getElementById("urgent-btn");
+    if (btn) btn.style.display = "inline-block";
   }
 });
+
+function setLoggedInState(loginForm, userInfo, userLabel, appStatus, userId, email, segment) {
+  if (loginForm) loginForm.style.display = "none";
+  if (userInfo) userInfo.style.display = "block";
+  if (userLabel) {
+    const parts = [userId, email].filter(Boolean);
+    userLabel.textContent = parts.join(" • ");
+  }
+  if (appStatus) appStatus.textContent = `Logged in as ${segment || "user"}`;
+}
+
+function setLoggedOutState(loginForm, userInfo, userLabel, appStatus) {
+  if (loginForm) loginForm.style.display = "block";
+  if (userInfo) userInfo.style.display = "none";
+  if (userLabel) userLabel.textContent = "";
+  if (appStatus) appStatus.textContent = "Logged out";
+}
+
+function applyUserContext(userId, email, segment) {
+  const normalizedId = String(userId || "").trim();
+  const normalizedEmail = String(email || "").trim();
+  const normalizedSegment = String(segment || "free_user").trim();
+
+  if (!normalizedId && !normalizedEmail) return;
+
+  if (normalizedId) {
+    client?.identify?.(normalizedId, {
+      email: normalizedEmail,
+      segment: normalizedSegment,
+    });
+  }
+
+  Sentry.setUser({
+    ...(normalizedId ? { id: normalizedId } : {}),
+    ...(normalizedEmail ? { email: normalizedEmail } : {}),
+  });
+  Sentry.setTag("user_segment", normalizedSegment);
+  Sentry.setContext("auth", {
+    login_id: normalizedId || null,
+    email: normalizedEmail || null,
+    segment: normalizedSegment,
+  });
+}
 
 export function updateColor(r, g, b, box, hexOutput) {
   box.style.backgroundColor = mixColors(r, g, b);
@@ -32,6 +75,28 @@ export function init() {
   const sensorBox = document.getElementById("sensorBox");
   const sensorHex = document.getElementById("sensorHex");
 
+  const loginIdInput = document.getElementById("login-id");
+  const loginEmailInput = document.getElementById("login-email");
+  const loginSegmentInput = document.getElementById("login-segment");
+  const loginBtn = document.getElementById("login-btn");
+  const logoutBtn = document.getElementById("logout-btn");
+  const loginForm = document.getElementById("login-form");
+  const userInfo = document.getElementById("user-info");
+  const userLabel = document.getElementById("user-label");
+  const appStatus = document.getElementById("app-status");
+
+  if (!red || !green || !blue || !colorBox || !hexOutput || !button || !resetButton || !sensorBox || !sensorHex) {
+    return;
+  }
+
+  function syncUserContextFromInputs() {
+    applyUserContext(
+      loginIdInput?.value,
+      loginEmailInput?.value,
+      loginSegmentInput?.value
+    );
+  }
+
   let mixingStartTime = null;
 
   function onSliderChange() {
@@ -40,7 +105,7 @@ export function init() {
     const g = Number(green.value);
     const b = Number(blue.value);
     updateColor(r, g, b, colorBox, hexOutput);
-    client.capture("color mixed", {
+    client?.capture?.("color mixed", {
       red: r,
       green: g,
       blue: b,
@@ -60,18 +125,15 @@ export function init() {
         const g = Number(green.value);
         const b = Number(blue.value);
 
-        // Span 1: color computation
         const hex = await Sentry.startSpan(
           { name: "color.compute", op: "compute" },
           async () => {
-            // Simulate heavier computation so the span is visible in Waterfall
             await new Promise((res) => setTimeout(res, 40));
             applySensorColor(r, g, b, sensorBox, sensorHex);
             return rgbToHex(r, g, b);
           }
         );
 
-        // Span 2: brightness & dominant channel analysis
         const { brightness, dominant } = await Sentry.startSpan(
           { name: "color.analyze", op: "compute" },
           async () => {
@@ -83,7 +145,6 @@ export function init() {
           }
         );
 
-        // Span 3: analytics capture
         await Sentry.startSpan(
           { name: "posthog.capture", op: "analytics" },
           async () => {
@@ -91,8 +152,9 @@ export function init() {
               ? Math.round((Date.now() - mixingStartTime) / 1000)
               : 0;
             mixingStartTime = null;
-            client.capture("color_completed", { time_to_complete_seconds: timeToComplete });
-            client.capture("color_created", {
+
+            client?.capture?.("color_completed", { time_to_complete_seconds: timeToComplete });
+            client?.capture?.("color_created", {
               hex,
               red: r,
               green: g,
@@ -102,12 +164,12 @@ export function init() {
               dominant_channel: dominant,
               is_grayscale: r === g && g === b,
             });
-            client.capture("sensor color applied", { red: r, green: g, blue: b, hex });
+            client?.capture?.("sensor color applied", { red: r, green: g, blue: b, hex });
           }
         );
 
-        rootSpan.setAttribute("color.hex", hex);
-        rootSpan.setAttribute("color.brightness", brightness);
+        rootSpan?.setAttribute?.("color.hex", hex);
+        rootSpan?.setAttribute?.("color.brightness", brightness);
       }
     );
   });
@@ -119,7 +181,8 @@ export function init() {
     blue.value = 0;
     mixingStartTime = null;
     updateColor(0, 0, 0, colorBox, hexOutput);
-    client.capture("color_reset", {
+
+    client?.capture?.("color_reset", {
       reason: "manual_reset",
       previous_hex: prevHex,
     });
@@ -128,59 +191,43 @@ export function init() {
   const breakBtn = document.getElementById("break-btn");
   if (breakBtn) {
     breakBtn.addEventListener("click", () => {
-      myUndefinedFunction();
+      syncUserContextFromInputs();
       throw new Error("Sentry Test Error: Something went wrong!");
     });
   }
 
-  const loginBtn = document.getElementById("login-btn");
-  const logoutBtn = document.getElementById("logout-btn");
-  const loginForm = document.getElementById("login-form");
-  const userInfo = document.getElementById("user-info");
-  const userLabel = document.getElementById("user-label");
+  if (loginIdInput && loginEmailInput && loginSegmentInput) {
+    loginIdInput.addEventListener("input", syncUserContextFromInputs);
+    loginEmailInput.addEventListener("input", syncUserContextFromInputs);
+    loginSegmentInput.addEventListener("change", syncUserContextFromInputs);
+    syncUserContextFromInputs();
+  }
 
-  if (loginBtn) {
+  if (loginBtn && loginIdInput && loginEmailInput && loginSegmentInput) {
     loginBtn.addEventListener("click", () => {
-      Sentry.startSpan(
-        { name: "user.login", op: "ui.action" },
-        async () => {
-          const id = document.getElementById("login-id").value.trim() || "12345";
-          const email = document.getElementById("login-email").value.trim() || "student@example.com";
-          const segment = document.getElementById("login-segment").value;
+      const userId = loginIdInput.value;
+      const email = loginEmailInput.value;
+      const segment = loginSegmentInput.value;
 
-          // Span: simulate auth token validation
-          await Sentry.startSpan(
-            { name: "auth.validate", op: "http.client" },
-            async () => {
-              await new Promise((res) => setTimeout(res, 60));
-            }
-          );
-
-          // Span: set user context
-          await Sentry.startSpan(
-            { name: "sentry.setUser", op: "sentry" },
-            async () => {
-              Sentry.setUser({ id, email, segment });
-            }
-          );
-
-          loginForm.style.display = "none";
-          userInfo.style.display = "flex";
-          userLabel.textContent = `${email} (${segment})`;
-        }
-      );
+      applyUserContext(userId, email, segment);
+      client?.capture?.("user_login", {
+        user_id: userId,
+        email_domain: String(email).includes("@") ? String(email).split("@")[1] : "unknown",
+        segment,
+      });
+      setLoggedInState(loginForm, userInfo, userLabel, appStatus, userId, email, segment);
     });
   }
 
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       Sentry.setUser(null);
-
-      userInfo.style.display = "none";
-      loginForm.style.display = "block";
+      Sentry.setTag("user_segment", "logged_out");
+      Sentry.setContext("auth", null);
+      client?.capture?.("user_logout", { reason: "manual_logout" });
+      setLoggedOutState(loginForm, userInfo, userLabel, appStatus);
     });
   }
 
-  // початкове оновлення
   onSliderChange();
 }
