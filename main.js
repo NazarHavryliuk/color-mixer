@@ -15,7 +15,7 @@ Sentry.init({
   tunnel: '/sentry-tunnel',
 });
 
-posthog.init(import.meta.env.VITE_POSTHOG_API_KEY, {  
+posthog.init("phc_CEaawL384zYxVKk39r8Cqe8RWaRqWRWRKnF6ajyLS5F3", {  
   api_host: '/ingest',  
   ui_host: import.meta.env.VITE_POSTHOG_HOST,  
   person_profiles: 'always',  
