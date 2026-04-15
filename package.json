@@ -49,5 +49,8 @@
     "@sentry/cli": "^2.58.5",
     "@sentry/vue": "^10.47.0",
     "posthog-js": "^1.365.1"
+  },
+  "overrides": {
+    "eslint": "8.57.1"
   }
 }
