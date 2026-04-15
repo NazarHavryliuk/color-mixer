@@ -3,8 +3,8 @@ import { mixColors, rgbToHex } from "./color.js";
 import { client } from "./posthog.js"; // ❗ прибрав getDistinctId
 import * as Sentry from "@sentry/browser";
 
-client.onFeatureFlags(() => {
-  if (client.isFeatureEnabled("show-urgent-filter")) {
+posthog.onFeatureFlags(() => {
+  if (posthog.isFeatureEnabled("show-urgent-filter")) {
     const btn = document.getElementById("urgent-btn");
     if (btn) btn.style.display = "inline-block";
   }

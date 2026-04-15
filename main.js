@@ -15,17 +15,24 @@ Sentry.init({
   tunnel: '/sentry-tunnel',
 });
 
-posthog.init("phc_CEaawL384zYxVKk39r8Cqe8RWaRqWRWRKnF6ajyLS5F3", {  
-  api_host: "https://eu.posthog.com",   
-  person_profiles: 'always',  
-  disable_session_recording: false, // явно вмикаємо (або просто не вказуй — буде увімкнено)  
-  session_recording: {  
-    maskAllInputs: false,  
-  },  
-});  
+posthog.init("phc_XXX", {
+  api_host: "https://app.posthog.com",
+  ui_host: "https://eu.posthog.com",
+  person_profiles: 'always',
+  session_recording: {
+    maskAllInputs: false,
+  },
+  loaded: () => {
+    posthog.reloadFeatureFlags();
 
-posthog.identify(
-  posthog.get_distinct_id()
-);
+    if (posthog.isFeatureEnabled("show-urgent-filter")) {
+      const btn = document.getElementById("urgent-btn");
+      if (btn) btn.style.display = "inline-block";
+    }
+  }
+});
+
+posthog.identify(posthog.get_distinct_id());
+posthog.reloadFeatureFlags();
 
 window.posthog = posthog;
