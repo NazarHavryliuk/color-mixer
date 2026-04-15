@@ -25,4 +25,8 @@ posthog.init("phc_CEaawL384zYxVKk39r8Cqe8RWaRqWRWRKnF6ajyLS5F3", {
   },  
 });  
 
+posthog.identify(
+  posthog.get_distinct_id()
+);
+
 window.posthog = posthog;
